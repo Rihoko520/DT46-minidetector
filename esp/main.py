@@ -22,14 +22,21 @@ while True:
             yaw = data['yaw']  # 提取 yaw 值
             pitch = data['pitch']  # 提取 pitch 值
             print(f'Parsed Yaw: {yaw}, Parsed Pitch: {pitch}')  # 打印解析后的值
-            servo_yaw.set_angle(yaw)  # 设置舵机角度
-            servo_pitch.set_angle(pitch)  # 设置舵机角度
-
+            if yaw == 0 and pitch == 0:
+                servo_yaw.set_angle(90)
+                servo_pitch.set_angle(90)
+            yaw = -yaw
+            pitch = -pitch
+            servo_yaw.targe_angle += yaw
+            servo_pitch.targe_angle += pitch
+            servo_yaw.set_angle(servo_yaw.targe_angle)  # 设置舵机角度
+            servo_pitch.set_angle(servo_pitch.targe_angle)  # 设置舵机角度
             # 发送反馈信息
             uart.write(f'{yaw}/{pitch}\n'.encode('utf-8'))  # 发送一条数据
-
+            time.sleep(0.08)
         except ValueError as e:
             print(f"数据格式错误: {e}")  # 捕获并打印格式错误
         except IndexError:
             print("接收到的数据格式不正确，无法提取 yaw 和 pitch。")
+
 

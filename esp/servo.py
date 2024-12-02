@@ -57,7 +57,7 @@ class Servo:
 
     def set_step(self, step = 1):  # 以最小精度步进N步
         self.set_angle_relative(self.min_accu * step)
-        
+
     def reset(self):  # 复位
         self.set_angle(90)
 
@@ -66,3 +66,4 @@ if __name__ == "__main__":
     servo_y = Servo(5)
     servo_y.set_angle(90)
     time.sleep(1)
+

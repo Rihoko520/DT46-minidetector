@@ -21,12 +21,12 @@ def time_diff(last_time=[None]):
 class ArmorTracker():
     def __init__(self, color):
         self.pic_width = 640       # 随便初始化一个图像宽度
-        self.center_last = (0, 0)   # 默认初始化中心点坐标为(0, 0)
-        self.height_last = 0             # 初始化armmor高度为0
+        self.center_last = (0.000_0001, 0.000_0001)   # 默认初始化中心点坐标为(0, 0)
+        self.height_last = 0.000_0001             # 初始化armmor高度为0
         self.use_kf = True          # 是否使用卡尔曼滤波
         self.kf_cx = KalmanFilter()
         self.kf_cy = KalmanFilter()
-        self.height = 0
+        self.height = 0.000_0001
         self.lost = 0               # 初始化丢失帧数
         self.frame_add = 0         # 初始化补帧数
         self.tracking_color = color    # 1蓝色表示, 0表示红色, 现初始化为红色
@@ -45,9 +45,9 @@ class ArmorTracker():
                     self.center_last = (self.kf_cx.get_state(), self.kf_cy.get_state())  # 获取预测的状态
                     logger.info(f"预测的 cx: {self.center_last[0]}, cy: {self.center_last[1]}, h: {self.height}")
                 else :
-                    self.center_last = (0, 0) 
+                    self.center_last = (0.000_0001, 0.000_0001) 
             else :
-                self.center_last = (0, 0)
+                self.center_last = (0.000_0001, 0.000_0001)
 
         else :
             # if "center" in tracking_armor and "height" in tracking_armor:
@@ -60,7 +60,7 @@ class ArmorTracker():
                 self.kf_cy.update(self.center_last[1])  # 更新状态        
                 self.center_last = (self.kf_cx.get_state(), self.kf_cy.get_state())  # 获取预测的状态
                 self.height = tracking_armor["height"]
-                logger.info(f"预测的 cx: {self.center_last[0]}, cy: {self.center_last[1]}, h: {self.height}")
+                logger.info(f"预测的 cx: {self.center_last[0]}, cy: {self.center_last[1]}, h: {self.height}")        
         yaw, pitch = pixel_to_angle_and_deep(self.center_last, self.vfov, self.pic_width) 
         logger.info(f'发送 yaw: {yaw}, pitch: {pitch}')
         return yaw, pitch 

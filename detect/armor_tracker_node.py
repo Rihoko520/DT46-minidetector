@@ -33,6 +33,8 @@ class ArmorTracker():
         self.vfov = 45
 
     def track(self, info):
+        self.kf_cx.dt = time_diff()
+        self.kf_cy.dt = self.kf_cx.dt
         tracking_armor = select_tracking_armor(info, self.tracking_color)  # 0表示红色
         if not tracking_armor :  # 检查 tracking_armor 是否为空
             if self.use_kf == True :

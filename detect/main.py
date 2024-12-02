@@ -33,13 +33,13 @@ class Cam():
             if not ret:  # 如果未成功读取帧
                 print("错误: 无法读取帧")
                 break  # 退出循环
-            logger.info(f"cam: {w} x {h} @ {fps}") 
+            #logger.info(f"cam: {w} x {h} @ {fps}") 
             info = detector.detect_armor(frame)  # 使用 detector 进行检测
             target_yaw, target_pitch = tracker.track(info)
             transfer.send(target_yaw, target_pitch)
             end_time = time.time()  # 记录帧处理结束时间
             detection_time = (end_time - start_time) * 1000  # 转换为毫秒
-            logger.debug(f"检测延迟: {int(detection_time)} 毫秒")  # 输出检测延迟
+            #logger.debug(f"检测延迟: {int(detection_time)} 毫秒")  # 输出检测延迟
             if cv2.waitKey(1) & 0xFF == ord("q"):  # 检测按键
                 break  # 退出循环
         video_stream.release()  # 释放视频流
@@ -58,7 +58,7 @@ light_params = {
     "vertical_discretization": 0.615,  # 垂直离散
     "height_tol": 34,  # 高度容差
     "cy_tol":24,  # 中心点的y轴容差
-    "height_multiplier": 2.5 
+    "height_multiplier": 3 
 }
 # 颜色参数字典
 color_params = {
@@ -71,15 +71,15 @@ cam_params = {
         "width": 640,  # 你想要的宽度
         "height": 480,   # 你想要的高度
         "fps": 180,  # 你想要的帧率
-        "cam_num": 4  # 摄像头编号
+        "cam_num": 1  # 摄像头编号
 }
 # 配置串口参数
-serial_port = '/dev/ttyACM1'  # 根据实际情况修改
+serial_port = '/dev/ttyS2'  # 根据实际情况修改
 baud_rate = 115200       # 波特率
 timeout = 1            # 超时设置
 detector = ArmorDetector(detect_color, 0, binary_val, light_params, color_params)  # 创建检测器对象
 tracker = ArmorTracker(detect_color)
-tracker.frame_add = 10
+tracker.frame_add = 5
 tracker.vfov = 36
 transfer = Trans(serial_port, baud_rate, timeout)
 cam = Cam(cam_params)

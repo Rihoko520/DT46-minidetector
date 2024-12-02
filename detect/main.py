@@ -81,7 +81,6 @@ detector = ArmorDetector(detect_color, 0, binary_val, light_params, color_params
 tracker = ArmorTracker(detect_color)
 tracker.frame_add = 10
 tracker.vfov = 36
-tracker.kp = 0.001
 transfer = Trans(serial_port, baud_rate, timeout)
 cam = Cam(cam_params)
 cam.detect(detector, tracker, transfer)

@@ -37,9 +37,6 @@ class Cam():
             info = detector.detect_armor(frame)  # 使用 detector 进行检测
             target_yaw, target_pitch = tracker.track(info)
             transfer.send(target_yaw, target_pitch)
-            binary, restlt = detector.display()
-            cv2.imshow("binary", binary)
-            cv2.imshow("result", restlt)
             end_time = time.time()  # 记录帧处理结束时间
             detection_time = (end_time - start_time) * 1000  # 转换为毫秒
             logger.debug(f"检测延迟: {int(detection_time)} 毫秒")  # 输出检测延迟
@@ -50,20 +47,18 @@ class Cam():
         transfer.close()
         logger.info("off")
     
-# 模式参数字典
 detect_color =  0  # 颜色参数 0: 识别红色装甲板, 1: 识别蓝色装甲板, 2: 识别全部装甲板
-display_mode = 2 # 显示模式 0: 不显示, 1: 显示二值化图, 2: 显示二值化图和结果图像
 # 图像参数字典
-binary_val = 139  
+binary_val = 78  
 light_params = {
-    "light_area_min": 5,  # 最小灯条面积
+    "light_area_min": 19,  # 最小灯条面积
     "light_angle_min": -45,  # 最小灯条角度
     "light_angle_max": 45,  # 最大灯条角度
     "light_angle_tol": 20,  # 灯条角度容差
-    "vertical_discretization": 615,  # 垂直离散
-    "height_tol": 12,  # 高度容差
-    "cy_tol": 5,  # 中心点的y轴容差
-    "height_multiplier": 25 
+    "vertical_discretization": 0.615,  # 垂直离散
+    "height_tol": 34,  # 高度容差
+    "cy_tol":24,  # 中心点的y轴容差
+    "height_multiplier": 2.5 
 }
 # 颜色参数字典
 color_params = {
@@ -82,10 +77,11 @@ cam_params = {
 serial_port = '/dev/ttyACM1'  # 根据实际情况修改
 baud_rate = 115200       # 波特率
 timeout = 1            # 超时设置
-detector = ArmorDetector(detect_color, display_mode, binary_val, light_params, color_params)  # 创建检测器对象
+detector = ArmorDetector(detect_color, 0, binary_val, light_params, color_params)  # 创建检测器对象
 tracker = ArmorTracker(detect_color)
 tracker.frame_add = 10
 tracker.vfov = 36
+tracker.kp = 0.001
 transfer = Trans(serial_port, baud_rate, timeout)
 cam = Cam(cam_params)
 cam.detect(detector, tracker, transfer)

@@ -31,6 +31,7 @@ class ArmorTracker():
         self.frame_add = 0         # 初始化补帧数
         self.tracking_color = color    # 1蓝色表示, 0表示红色, 现初始化为红色
         self.vfov = 45
+        self.kp = 0.01
 
     def track(self, info):
         tracking_armor = select_tracking_armor(info, self.tracking_color)  # 0表示红色
@@ -61,5 +62,5 @@ class ArmorTracker():
                 logger.info(f"预测的 cx: {self.center_last[0]}, cy: {self.center_last[1]}, h: {self.height}")
         yaw, pitch = pixel_to_angle_and_deep(self.center_last, self.vfov, self.pic_width) 
         logger.info(f'发送 yaw: {yaw}, pitch: {pitch}')
-        return yaw, pitch
+        return yaw * self.kp, pitch * self.kp
 

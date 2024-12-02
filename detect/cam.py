@@ -14,6 +14,7 @@ class Cam():
         self.height = cam_params["height"]   # 你想要的高度
         self.fps = cam_params["fps"]  # 你想要的帧率
         self.cam_num = cam_params["cam_num"]
+        self.exposure = cam_params["exposure_value"]
 
     def run(self, detector, adjust):
         if self.mode in [0, 2]:  # 处理视频流
@@ -27,6 +28,7 @@ class Cam():
             w = video_stream.get(cv2.CAP_PROP_FRAME_WIDTH)
             h = video_stream.get(cv2.CAP_PROP_FRAME_HEIGHT)
             fps = video_stream.get(cv2.CAP_PROP_FPS)
+            video_stream.set(cv2.CAP_PROP_EXPOSURE, self.exposure)
             if not video_stream.isOpened():  # 检查视频流是否成功打开
                 print("错误: 无法打开视频流。")
             if self.mode == 0:
@@ -84,18 +86,18 @@ class Cam():
             
 if __name__ == "__main__":
     # 模式参数字典
-    detect_color =  2  # 颜色参数 0: 识别红色装甲板, 1: 识别蓝色装甲板, 2: 识别全部装甲板
+    detect_color =  0  # 颜色参数 0: 识别红色装甲板, 1: 识别蓝色装甲板, 2: 识别全部装甲板
     display_mode = 2 # 显示模式 0: 不显示, 1: 显示二值化图, 2: 显示二值化图和结果图像
     # 图像参数字典
-    binary_val = 35  
+    binary_val = 78  
     light_params = {
-        "light_area_min": 5,  # 最小灯条面积
+        "light_area_min": 19,  # 最小灯条面积
         "light_angle_min": -45,  # 最小灯条角度
         "light_angle_max": 45,  # 最大灯条角度
         "light_angle_tol": 20,  # 灯条角度容差
         "vertical_discretization": 615,  # 垂直离散
-        "height_tol": 12,  # 高度容差
-        "cy_tol": 5,  # 中心点的y轴容差
+        "height_tol": 34,  # 高度容差
+        "cy_tol":24,  # 中心点的y轴容差
         "height_multiplier": 25 
     }
     # 颜色参数字典
@@ -115,7 +117,8 @@ if __name__ == "__main__":
             "width": 640,  # 你想要的宽度
             "height": 480,   # 你想要的高度
             "fps": 180, # 你想要的帧率
-            "cam_num": 4  # 摄像头编号"
+            "cam_num": 4,  # 摄像头编号"
+            "exposure_value": 0 # 曝光值
     }
     detector = ArmorDetector(detect_color, display_mode, binary_val, light_params, color_params)  # 创建检测器对象
     adjust = Adjust(light_params, binary_val)

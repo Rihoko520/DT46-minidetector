@@ -9,3 +9,4 @@ def release_all_GPIO():
         except:
             print(f"skip gpio {i}")
             continue
+release_all_GPIO()

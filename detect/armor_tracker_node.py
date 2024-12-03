@@ -22,7 +22,7 @@ class ArmorTracker():
     def __init__(self, color):
         self.pic_width = 640       # 随便初始化一个图像宽度
         self.center_last = (0, 0)   # 默认初始化中心点坐标为(0, 0)
-        self.height_last = 0            # 初始化armmor高度为0
+        self.height_last = 0             # 初始化armmor高度为0
         self.use_kf = True          # 是否使用卡尔曼滤波
         self.kf_cx = KalmanFilter()
         self.kf_cy = KalmanFilter()

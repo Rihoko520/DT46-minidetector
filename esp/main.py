@@ -12,15 +12,14 @@ servo_pitch = Servo(0, limit_min_angle = 90-45, limit_max_angle = 90+25)
 
 uart = UART(1, 115200, rx=21, tx=20)  # 设置串口号1和波特率
 
-kp_yaw = 0.8
-kp_pitch = 0.6
+kp_yaw = 0.0015
+kp_pitch = 0.0015
 
-speed_yaw = 0.000_0001
-speed_pitch = 0.000_0001
+yaw_ = 0
+pitch_ = 0
 
-def run(callback):
-    global speed_yaw, speed_pitch, kp_yaw, kp_pitch
-    
+def receive(callback):
+    global yaw_, pitch_
     while True:
         # 判断有无收到信息
         if uart.any():
@@ -34,35 +33,25 @@ def run(callback):
                 print(f'Parsed Yaw: {yaw}, Parsed Pitch: {pitch}')  # 打印解析后的值
                 yaw = -yaw
                 pitch = -pitch
-                # servo_yaw.set_angle_relative(yaw * kp_yaw)  # 设置舵机角度
-                # servo_pitch.set_relative(pitch * kp_pitch)  # 设置舵机角度
-
-                speed_yaw = yaw * kp_yaw
-                speed_pitch = pitch * kp_pitch
+                yaw_ = yaw * kp_yaw
+                pitch_ = pitch * kp_pitch
                 
-                # 发送反馈信息
-                uart.write(f'{yaw}/{pitch}\n'.encode('utf-8'))  # 发送一条数据
-                time.sleep(0.08)
+
             except ValueError as e:
                 print(f"数据格式错误: {e}")  # 捕获并打印格式错误
             except IndexError:
                 print("接收到的数据格式不正确，无法提取 yaw 和 pitch。")
-
-def step_yaw(callback):
-    global speed_yaw, speed_pitch
+            
+def servo_move(callback):
     while True:
-        servo_yaw.set_angle_relative(0.1)
-        time.sleep(1/speed_yaw)
+        servo_yaw.set_angle_relative(yaw_)  # 设置舵机角度
+        servo_pitch.set_angle_relative(pitch_)  # 设置舵机角度
 
-def step_pitch(callback):
-    global speed_yaw, speed_pitch
-    while True:
-        servo_yaw.set_angle_relative(0.1)
-        time.sleep(1/speed_pitch)
+_thread.start_new_thread(receive,("1",))
+_thread.start_new_thread(servo_move,("2",))
 
-_thread.start_new_thread(run,("1",)) #开启线程1,参数必须是元组
-_thread.start_new_thread(step_yaw,("2",)) #开启线程2，参数必须是元组
-_thread.start_new_thread(step_pitch,("3",)) #开启线程2，参数必须是元组
+
+
 
 
 

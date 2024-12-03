@@ -89,7 +89,7 @@ if __name__ == "__main__":
     detect_color =  0  # 颜色参数 0: 识别红色装甲板, 1: 识别蓝色装甲板, 2: 识别全部装甲板
     display_mode = 2 # 显示模式 0: 不显示, 1: 显示二值化图, 2: 显示二值化图和结果图像
     # 图像参数字典
-    binary_val = 78  
+    binary_val = 96  
     light_params = {
         "light_area_min": 19,  # 最小灯条面积
         "light_angle_min": -45,  # 最小灯条角度

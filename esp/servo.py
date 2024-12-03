@@ -11,10 +11,9 @@ class Servo:
         max_us    = 2500,       # 最大脉宽         
         max_angle = 180,        # 舵机可达最大角度
         min_accu  = 0.3,        # 最小精度
-
         targe_angle     = 90,   # 初始化目标角度
         limit_min_angle = 0,    # 最小角度限制
-        limit_max_angle = 180   # 最大角度限制
+        limit_max_angle = 180  # 最大角度限制
     ):
         self.pin = pin
         self.pwm = PWM(Pin(pin), freq=freq, duty=0)
@@ -41,7 +40,7 @@ class Servo:
 
         targe_angle = min(max(targe_angle, self.limit_min_angle), self.limit_max_angle) # 限制角度
 
-        print(f"set_angle(): 实际舵机 {self.pin} 可达角度: {targe_angle}\n")
+        #print(f"{self.pin} 可达角度: {targe_angle}\n")
 
         self.targe_angle = targe_angle
 
@@ -51,7 +50,7 @@ class Servo:
         self.pwm.duty_ns(ns)
 
     def set_angle_relative(self, relative_angle):  # 相对角度运动
-        print(f"set_angle_relative(): 传入舵机 {self.pin} 相对角度: {relative_angle}\n")
+        #print(f"set_angle_relative(): 传入舵机 {self.pin} 相对角度: {relative_angle}\n")
         self.targe_angle += relative_angle
         self.set_angle(self.targe_angle)
 
@@ -66,4 +65,5 @@ if __name__ == "__main__":
     servo_y = Servo(5)
     servo_y.set_angle(90)
     time.sleep(1)
+
 

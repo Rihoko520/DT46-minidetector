@@ -66,3 +66,5 @@ _thread.start_new_thread(step_pitch,("3",)) #开启线程2，参数必须是元�
 
 
 
+
+

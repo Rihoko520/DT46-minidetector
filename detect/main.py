@@ -74,7 +74,7 @@ cam_params = {
         "width": 640,  # 你想要的宽度
         "height": 480,   # 你想要的高度
         "fps": 180,  # 你想要的帧率
-        "cam_num": 4  # 摄像头编号
+        "cam_num": 1  # 摄像头编号
 }
 # 配置串口参数
 serial_port = '/dev/ttyS2'  # 根据实际情况修改
@@ -82,7 +82,7 @@ baud_rate = 115200       # 波特率
 timeout = 1            # 超时设置
 detector = ArmorDetector(detect_color, 2, binary_val, light_params, color_params)  # 创建检测器对象
 tracker = ArmorTracker(detect_color)
-tracker.frame_add = 0
+tracker.frame_add = 1
 tracker.vfov = 36
 transfer = Trans(serial_port, baud_rate, timeout)
 cam = Cam(cam_params)

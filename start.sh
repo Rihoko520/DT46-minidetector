@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python /home/rihoko/detector-mini/detect/main.py
+python /home/pi/DT46-minidetector/detect/main.py

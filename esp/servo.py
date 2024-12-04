@@ -11,7 +11,7 @@ class Servo:
         max_us    = 2500,       # 最大脉宽         
         max_angle = 180,        # 舵机可达最大角度
         min_accu  = 0.3,        # 最小精度
-        targe_angle     = 90,   # 初始化目标角度
+        targe_angle = 90,   # 初始化目标角度
         limit_min_angle = 0,    # 最小角度限制
         limit_max_angle = 180  # 最大角度限制
     ):
@@ -43,7 +43,13 @@ class Servo:
         #print(f"{self.pin} 可达角度: {targe_angle}\n")
 
         self.targe_angle = targe_angle
-
+        
+        if self.targe_angle >= self.limit_max_angle :
+            self.targe_angle = self.limit_max_angle
+            
+        if self.targe_angle <= self.limit_min_angle :
+            self.targe_angle = self.limit_min_angle
+            
         us = self.min_us + (self.max_us - self.min_us) * (targe_angle / self.max_angle)
         ns = int(us * 1000)
 

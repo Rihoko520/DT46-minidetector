@@ -54,16 +54,16 @@ class Cam():
     
 detect_color =  0  # 颜色参数 0: 识别红色装甲板, 1: 识别蓝色装甲板, 2: 识别全部装甲板
 # 图像参数字典
-binary_val = 101   
+binary_val = 154   
 light_params = {
     "light_area_min": 5,  # 最小灯条面积
     "light_angle_min": -45,  # 最小灯条角度
     "light_angle_max": 45,  # 最大灯条角度
-    "light_angle_tol": 10,  # 灯条角度容差
-    "vertical_discretization": 0.615,  # 垂直离散
-    "height_tol": 18,  # 高度容差
-    "cy_tol":11,  # 中心点的y轴容差
-    "height_multiplier": 4.5
+    "light_angle_tol": 7,  # 灯条角度容差
+    "vertical_discretization": 2.615,  # 垂直离散
+    "height_tol": 30,  # 高度容差
+    "cy_tol":20,  # 中心点的y轴容差
+    "height_multiplier": 5
 }
 # 颜色参数字典
 color_params = {
@@ -85,7 +85,7 @@ timeout = 1            # 超时设置
 detector = ArmorDetector(detect_color, 2, binary_val, light_params, color_params)  # 创建检测器对象
 tracker = ArmorTracker(detect_color)
 tracker.frame_add = 1
-tracker.vfov = 36
+tracker.vfov = 75
 transfer = Trans(serial_port, baud_rate, timeout)
 cam = Cam(cam_params)
 cam.detect(detector, tracker, transfer)

@@ -18,8 +18,8 @@ class Aim():
         self.yaw_input = 0
         self.pitch_input = 0
 
-        self.pid_yaw = PIDController(Kp=0.215, Ki=0, Kd=0)
-        self.pid_pitch = PIDController(Kp=0, Ki=0, Kd=0)
+        self.pid_yaw = PIDController(Kp=0.01177, Ki=0., Kd=0.2748)
+        self.pid_pitch = PIDController(Kp=0.0090, Ki=0, Kd=0.285)
 
         self.servo_yaw = Servo(1, limit_min_angle = 90-50, limit_max_angle = 90+50)
         self.servo_pitch = Servo(0, limit_min_angle = 90-18, limit_max_angle = 90+45)
@@ -46,6 +46,7 @@ class Aim():
                 
     def servo_move(self, callback):
         while True:
+            time.sleep(0.001)
             self.yaw_input = self.pid_yaw.update(self.yaw, self.yaw_current)
             yaw_targe_angle_last = self.servo_yaw.targe_angle
             print(self.yaw_input)

@@ -21,8 +21,8 @@ User=pi
 Group=pi
 
 ExecStartPre=/bin/sleep 5
-ExecStart=/home/rihoko/detector-mini/start.sh
-ExecStop=/home/rihoko/detector-mini/stop.sh
+ExecStart=/home/pi/DT46-minidetector/detect/main.py
+ExecStop=/home/pi/DT46-minidetector/detect/main.py
 Restart=always
 TimeoutStopSec=30
 RestartSec=10s

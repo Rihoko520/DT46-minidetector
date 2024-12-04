@@ -76,7 +76,7 @@ cam_params = {
         "width": 640,  # 你想要的宽度
         "height": 480,   # 你想要的高度
         "fps": 180,  # 你想要的帧率
-        "cam_num": 4  # 摄像头编号
+        "cam_num": 1  # 摄像头编号
 }
 # 配置串口参数
 serial_port = '/dev/ttyS2'  # 根据实际情况修改

@@ -19,6 +19,8 @@ class Cam():
         video_stream.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'))
         video_stream.set(cv2.CAP_PROP_FRAME_WIDTH, self.width)
         video_stream.set(cv2.CAP_PROP_FRAME_HEIGHT, self.height)
+        video_stream.set(cv2.CAP_PROP_AUTO_EXPOSURE, 1)
+        video_stream.set(cv2.CAP_PROP_EXPOSURE, 50)      
         # 设置帧率
         video_stream.set(cv2.CAP_PROP_FPS, self.fps)
         w = video_stream.get(cv2.CAP_PROP_FRAME_WIDTH)
@@ -52,16 +54,16 @@ class Cam():
     
 detect_color =  0  # 颜色参数 0: 识别红色装甲板, 1: 识别蓝色装甲板, 2: 识别全部装甲板
 # 图像参数字典
-binary_val = 80    
+binary_val = 101   
 light_params = {
-    "light_area_min": 15,  # 最小灯条面积
+    "light_area_min": 5,  # 最小灯条面积
     "light_angle_min": -45,  # 最小灯条角度
     "light_angle_max": 45,  # 最大灯条角度
     "light_angle_tol": 10,  # 灯条角度容差
     "vertical_discretization": 0.615,  # 垂直离散
     "height_tol": 18,  # 高度容差
     "cy_tol":11,  # 中心点的y轴容差
-    "height_multiplier": 3.5
+    "height_multiplier": 4.5
 }
 # 颜色参数字典
 color_params = {

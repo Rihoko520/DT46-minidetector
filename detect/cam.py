@@ -23,12 +23,14 @@ class Cam():
             video_stream.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'))
             video_stream.set(cv2.CAP_PROP_FRAME_WIDTH, self.width)
             video_stream.set(cv2.CAP_PROP_FRAME_HEIGHT, self.height)
+            video_stream.set(cv2.CAP_PROP_AUTO_EXPOSURE, 1)
+            video_stream.set(cv2.CAP_PROP_EXPOSURE, self.exposure)  
             # 设置帧率
             video_stream.set(cv2.CAP_PROP_FPS, self.fps)
             w = video_stream.get(cv2.CAP_PROP_FRAME_WIDTH)
             h = video_stream.get(cv2.CAP_PROP_FRAME_HEIGHT)
             fps = video_stream.get(cv2.CAP_PROP_FPS)
-            video_stream.set(cv2.CAP_PROP_EXPOSURE, self.exposure)
+
             if not video_stream.isOpened():  # 检查视频流是否成功打开
                 print("错误: 无法打开视频流。")
             if self.mode == 0:
@@ -118,7 +120,7 @@ if __name__ == "__main__":
             "height": 480,   # 你想要的高度
             "fps": 180, # 你想要的帧率
             "cam_num": 4,  # 摄像头编号"
-            "exposure_value": 0 # 曝光值
+            "exposure_value": 2 # 曝光值
     }
     detector = ArmorDetector(detect_color, display_mode, binary_val, light_params, color_params)  # 创建检测器对象
     adjust = Adjust(light_params, binary_val)

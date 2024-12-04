@@ -7,13 +7,14 @@ import _thread
 
 time.sleep(1)  # 防止点停止按钮后马上再启动导致 Thonny 连接不上
 
-servo_yaw = Servo(1, limit_min_angle = 90-45, limit_max_angle = 90+45)
-servo_pitch = Servo(0, limit_min_angle = 90-45, limit_max_angle = 90+25)
+servo_yaw = Servo(1, limit_min_angle = 90-50, limit_max_angle = 90+50)
+servo_pitch = Servo(0, limit_min_angle = 90-18, limit_max_angle = 90+45)
 
 uart = UART(1, 115200, rx=21, tx=20)  # 设置串口号1和波特率
 
-kp_yaw = 0.0015
-kp_pitch = 0.0015
+kp_yaw = 0.0009
+kp_pitch = 0.0009
+
 
 yaw_ = 0
 pitch_ = 0
@@ -31,8 +32,6 @@ def receive(callback):
                 yaw = data['yaw']  # 提取 yaw 值
                 pitch = data['pitch']  # 提取 pitch 值
                 print(f'Parsed Yaw: {yaw}, Parsed Pitch: {pitch}')  # 打印解析后的值
-                yaw = -yaw
-                pitch = -pitch
                 yaw_ = yaw * kp_yaw
                 pitch_ = pitch * kp_pitch
                 

@@ -9,6 +9,8 @@ time.sleep(1)  # 防止点停止按钮后马上再启动导致 Thonny 连接不�
 
 servo_yaw = Servo(1, limit_min_angle = 90-50, limit_max_angle = 90+50)
 servo_pitch = Servo(0, limit_min_angle = 90-18, limit_max_angle = 90+45)
+servo_yaw = Servo(1, limit_min_angle = 90-50, limit_max_angle = 90+50)
+servo_pitch = Servo(0, limit_min_angle = 90-18, limit_max_angle = 90+45)
 
 uart = UART(1, 115200, rx=21, tx=20)  # 设置串口号1和波特率
 

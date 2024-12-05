@@ -49,6 +49,8 @@ class Cam():
                     adjust.flag = False
                 if self.mode == 0:
                     binary, result = detector.display()
+                    cv2.namedWindow("binary", cv2.WINDOW_NORMAL)
+                    cv2.namedWindow("result", cv2.WINDOW_NORMAL)
                     cv2.imshow("result", result)
                     cv2.imshow("binary", binary)
                 
@@ -100,7 +102,7 @@ if __name__ == "__main__":
         "vertical_discretization": 615,  # 垂直离散
         "height_tol": 15,  # 高度容差
         "cy_tol":8,  # 中心点的y轴容差
-        "height_multiplier": 4.5 
+        "height_multiplier": 45
     }
     # 颜色参数字典
     color_params = {

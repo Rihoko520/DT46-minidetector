@@ -12,28 +12,33 @@ from digitalio import DigitalInOut, Direction
 led = DigitalInOut(board.LED) #定义引脚编号
 led.direction = Direction.OUTPUT  #IO为输出
 
+for i in range(5):
+    led.value = 1 #输出高电平，点亮板载LED蓝灯
+    time.sleep(0.3)
+    led.value = 0 #输出低电平，熄灭板载LED蓝灯
+    time.sleep(0.3)
 led.value = 1 #输出高电平，点亮板载LED蓝灯
 
-time.sleep(1)
+def find_first_camera():
+    # 假设最多有10个摄像头设备
+    camera_count = 10
 
-led.value = 0 #输出低电平，熄灭板载LED蓝灯
+    for i in range(camera_count):
+        # 尝试打开摄像头
+        cap = cv2.VideoCapture(i)
+        if cap.isOpened():
+            return cap  # 返回找到的第一个摄像头对象
 
-led.value = 1 #输出高电平，点亮板载LED蓝灯
 
-time.sleep(1)
-
-led.value = 0 #输出低电平，熄灭板载LED蓝灯
-
-time.sleep(1)
 class Cam():
     def __init__(self, cam_params):    
         self.width = cam_params["width"]  # 你想要的宽度
         self.height = cam_params["height"]   # 你想要的高度
         self.fps = cam_params["fps"]  # 你想要的帧率
-        self.cam_num = cam_params["cam_num"]
+
     def detect(self, detector, tracker, transfer):
         tracker.pic_width = self.width
-        video_stream = cv2.VideoCapture(self.cam_num)  # 打开视频流
+        video_stream = find_first_camera()  # 打开视频流
                 # 设置分辨率
         video_stream.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'))
         video_stream.set(cv2.CAP_PROP_FRAME_WIDTH, self.width)
@@ -96,7 +101,6 @@ cam_params = {
         "width": 640,  # 你想要的宽度
         "height": 480,   # 你想要的高度
         "fps": 180,  # 你想要的帧率
-        "cam_num": 1  # 摄像头编号
 }
 # 配置串口参数
 serial_port = '/dev/ttyS2'  # 根据实际情况修改

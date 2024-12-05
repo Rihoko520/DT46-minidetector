@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python /home/pi/DT46-minidetector/detect/main.py
+sudo python3 /home/pi/DT46-minidetector/detect/main.py

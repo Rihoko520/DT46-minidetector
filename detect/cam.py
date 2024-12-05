@@ -91,16 +91,16 @@ if __name__ == "__main__":
     detect_color =  0  # 颜色参数 0: 识别红色装甲板, 1: 识别蓝色装甲板, 2: 识别全部装甲板
     display_mode = 2 # 显示模式 0: 不显示, 1: 显示二值化图, 2: 显示二值化图和结果图像
     # 图像参数字典
-    binary_val = 161  
+    binary_val = 132  
     light_params = {
-        "light_area_min": 19,  # 最小灯条面积
+        "light_area_min": 5,  # 最小灯条面积
         "light_angle_min": -45,  # 最小灯条角度
         "light_angle_max": 45,  # 最大灯条角度
-        "light_angle_tol": 20,  # 灯条角度容差
+        "light_angle_tol": 7,  # 灯条角度容差
         "vertical_discretization": 615,  # 垂直离散
-        "height_tol": 34,  # 高度容差
-        "cy_tol":24,  # 中心点的y轴容差
-        "height_multiplier": 25 
+        "height_tol": 15,  # 高度容差
+        "cy_tol":8,  # 中心点的y轴容差
+        "height_multiplier": 4.5 
     }
     # 颜色参数字典
     color_params = {
@@ -118,9 +118,9 @@ if __name__ == "__main__":
     cam_params = { 
             "width": 640,  # 你想要的宽度
             "height": 480,   # 你想要的高度
-            "fps": 180, # 你想要的帧率
+            "fps": 30, # 你想要的帧率
             "cam_num": 4,  # 摄像头编号"
-            "exposure_value": 2 # 曝光值
+            "exposure_value": 0 # 曝光值
     }
     detector = ArmorDetector(detect_color, display_mode, binary_val, light_params, color_params)  # 创建检测器对象
     adjust = Adjust(light_params, binary_val)

@@ -66,8 +66,8 @@ class Cam():
             # cv2.imshow("img",img)
             target_yaw, target_pitch = tracker.track(info)
             transfer.send(target_yaw, target_pitch)
-            end_time = time.time()  # 记录帧处理结束时间
-            detection_time = (end_time - start_time) * 1000  # 转换为毫秒
+            # end_time = time.time()  # 记录帧处理结束时间
+            # detection_time = (end_time - start_time) * 1000  # 转换为毫秒
             #logger.debug(f"检测延迟: {int(detection_time)} 毫秒")  # 输出检测延迟
             if cv2.waitKey(1) & 0xFF == ord("q"):  # 检测按键
                 break  # 退出循环

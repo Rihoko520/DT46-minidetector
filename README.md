@@ -3,45 +3,38 @@ coding for retard
 ## 创建开机自启服务（非必须步骤）
 
 
-
 新建文件:
 ```bash
-sudo nano /etc/systemd/system/cv.service 
+sudo nano /lib/systemd/system/cv.service
 ```
+
 cv.service
 ```service
 [Unit]
-Description=cv Prediction Node
-After=network.target
+Description=Expand partition size
 
 [Service]
-Type=simple
-
-User=pi
-Group=pi
-
-ExecStartPre=/bin/sleep 5
-ExecStart=/home/pi/DT46-minidetector/detect/main.py
-ExecStop=/home/pi/DT46-minidetector/detect/main.py
-Restart=always
-TimeoutStopSec=30
-RestartSec=10s
+Type = oneshot
+ExecStart =python /home/pi/DT46-minidetector/detect/main.py
+RemainAfterExit = yes
+StandardOutput = null
 
 [Install]
-WantedBy=multi-user.target
+WantedBy = multi-user.target
 ```
+
+保存后给该文件最高权限：
+```
+sudo chmod 777 /lib/systemd/system/cv.service
+```
+
 启用服务
 ```bash
-sudo systemctl daemon-reload
-sudo systemctl start cv.service
-sudo systemctl status cv.service
-
 sudo systemctl enable cv.service
 ```
 
 stop
 ```bash
 journalctl -u cv.service
-
 sudo systemctl stop cv.service
 ```

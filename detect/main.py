@@ -5,7 +5,26 @@ from transfer import Trans
 from armor_tracker_node import ArmorTracker
 from loguru import logger
 import time
+import board,time
+from digitalio import DigitalInOut, Direction
 
+#构建LED对象和初始化
+led = DigitalInOut(board.LED) #定义引脚编号
+led.direction = Direction.OUTPUT  #IO为输出
+
+led.value = 1 #输出高电平，点亮板载LED蓝灯
+
+time.sleep(1)
+
+led.value = 0 #输出低电平，熄灭板载LED蓝灯
+
+led.value = 1 #输出高电平，点亮板载LED蓝灯
+
+time.sleep(1)
+
+led.value = 0 #输出低电平，熄灭板载LED蓝灯
+
+time.sleep(1)
 class Cam():
     def __init__(self, cam_params):    
         self.width = cam_params["width"]  # 你想要的宽度
